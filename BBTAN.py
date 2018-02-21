@@ -7,6 +7,7 @@ colormode(255)
 tracer(0)
 ht()
 
+
 SCREEN_WIDTH = getcanvas().winfo_width()/2
 SCREEN_HEIGHT = getcanvas().winfo_height()/2
 
@@ -45,7 +46,7 @@ class Ball(Turtle):
 
 class Square(Turtle):
 	def __init__(self, health, serial_number):
-		Turtle.__init__(self)
+		Turtle.__init__(self) 
 		self.health = health
 		self.serial_number = serial_number
 		self.color("Pink")
@@ -57,6 +58,7 @@ class Square(Turtle):
 		self.pu()
 		
 		for i in range(4):
+			self.pu()
 			fd(square_size - 10)
 			left(90)
 		self.end_poly()
@@ -90,21 +92,27 @@ def create(r, SCREEN_WIDTH, SCREEN_HEIGHT):
 			b+=1
 			pd()
 			square = Square(3,b)
+			pu()
 			fd(square_size)
+			pd()
 			SQUARE.append(square)
 			square.life()
 			print("new square")
+			ht()
 
 create(10, SCREEN_WIDTH, SCREEN_HEIGHT)
 
 
 
 
+NUMBER_BALLS = 1 
+
 
 
 Balls = []
-
-def create_ball(event):
+global Create1 
+Create1 = NUMBER_BALLS
+def create_ball(Create1):
 	global NUMBER_OF_BALLS
 	global Balls
 	NUMBER_OF_BALLS = 1
@@ -114,13 +122,15 @@ def create_ball(event):
 		y = -SCREEN_HEIGHT + 50
 		dx = event.x - SCREEN_WIDTH - x
 		dy = SCREEN_HEIGHT - event.y - y
+		
 		new_ball = Ball(dx/100, dy/100)
 		Balls.append(new_ball)
 		new_ball.move(SCREEN_WIDTH,SCREEN_HEIGHT)
+
 		print("new ball")
-
 		
-
+		if new_ball.xpos()== plus_square.xpos():
+			NUMBER_BALLS = NUMBER_BALLS + 1 
 getcanvas().bind("<Button-1>", create_ball)
 
 while True:
@@ -137,5 +147,48 @@ while True:
 # 	Ball1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
 # create_ball(event)
 # create_ball(event)
+
+#ball colision check:
+#sides of the ball:
+ball.top = ball.xpos()+radius 
+ball.bottom = ball.xpos()-radius 
+ball.right = ball.ypos()+radius 
+ball.left = ball.ypos()-radius  
+#sides of the square:
+
+def top(self):
+	return self.ycor()+self.height
+def bottom(self):
+	return self.ycor()
+def right(self):
+	return self.xcor()+self.width
+def left(self):
+	return self.xcor()
+
+def check_collision(ball,box):
+	#print(r1.height())
+	if (ball.top() >= box.bottom() and 
+		ball.right() >= box.left() and 
+		ball.bottom() <= rbox.top() and 
+		ball.left() <= box.right()):
+		print("the rectangles collide")
+		return True 
+	else :
+		print("the rectangles don't coolide")
+		return False 
+
+
+if check_collision == True:
+	#number in box go down by one
+	box_number = box_number -1 
+	ball.dx = ball.dx - 45
+	#(does this work???) 
+
+	# ball angle to change and move in the other direction 
+
+
+
+
+
 
 mainloop()
